@@ -1,0 +1,32 @@
+struct dsu {
+    vll par, r;
+ 
+    dsu(ll n) {
+        par.resize(n + 1), r.resize(n + 1);
+        forf(i, 0, n) {
+            par[i] = i;
+            r[i] = 1;
+        }
+    }
+ 
+    ll get(ll x) {
+        if (par[x] == x) return x;
+        return par[x] = get(par[x]);
+    }
+ 
+    void merge(ll x, ll y) {
+        ll u = get(x);
+        ll v = get(y);
+        if (r[u] > r[v]) {
+            par[v] = u;
+        }
+        else if (r[v] > r[u]) {
+            par[u] = v;
+        }
+        else {
+            if (u > v) swap(u, v);
+            par[v] = u;
+            r[u]++;
+        }
+    }
+};
