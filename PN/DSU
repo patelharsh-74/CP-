@@ -1,0 +1,21 @@
+struct DSU {
+  vector<int> par;//parent of ith element is par[i]
+  int comps;//no. of separated components
+ 
+  DSU(int _n) {
+    par.resize(_n);
+    iota(par.begin(), par.end(), 0);
+    comps = _n;
+  }
+  int find(int u) {
+    if (par[u] == u) return u;
+    return par[u] = find(par[u]);
+  }
+  bool merge(int u, int v) {
+    u = find(u), v = find(v);
+    if (u == v) return false;
+    par[u] = v;
+    --comps;
+    return true;
+  }
+};
